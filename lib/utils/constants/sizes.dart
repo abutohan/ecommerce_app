@@ -31,6 +31,11 @@ class CustomSizes {
   //Image Sizes
   static const double imageThumbSize = 80.0;
 
+  // -- Default Spacing Between Sections
+  static const double defaultSpace = 20.0;
+  static const double spaceBtwnItems = 12.0;
+  static const double spaceBtwnSections = 32.0;
+
   //Border Radius
   static const double borderRadiusSm = 4.0;
   static const double borderRadiusMd = 8.0;

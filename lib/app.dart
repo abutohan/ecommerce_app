@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/features/onboarding/onboarding_view.dart';
 import 'package:ecommerce_app/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      home: const OnBoardingView(),
     );
   }
 }
