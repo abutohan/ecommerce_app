@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/features/onboarding/bloc/onboarding_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:ecommerce_app/utils/utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 
 class OnBoardingNextButton extends StatelessWidget {
@@ -12,7 +14,9 @@ class OnBoardingNextButton extends StatelessWidget {
       right: CustomSizes.defaultSpace,
       bottom: CustomDeviceUtils.getBottomNavigationBarHeight(),
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          context.read<OnboardingBloc>().add(OnNextPage());
+        },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
           backgroundColor: dark ? CustomColors.primary : CustomColors.black,

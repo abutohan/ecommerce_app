@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/features/onboarding/bloc/onboarding_bloc.dart';
+import 'package:ecommerce_app/features/onboarding/data/onboarding.dart';
 import 'package:ecommerce_app/features/onboarding/widgets/onboarding_dot_navigation.dart';
 import 'package:ecommerce_app/features/onboarding/widgets/onboarding_next_button.dart';
 import 'package:ecommerce_app/features/onboarding/widgets/onboarding_page.dart';
@@ -5,37 +7,50 @@ import 'package:ecommerce_app/features/onboarding/widgets/onboarding_skip.dart';
 import 'package:ecommerce_app/utils/utils.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OnBoardingView extends StatelessWidget {
   const OnBoardingView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final PageController pageController = context
+        .read<OnboardingBloc>()
+        .pageController;
+    final List<OnBoarding> onBoardingScreen = onBoardingScreens;
+
     return Scaffold(
       body: Stack(
         children: [
           // -- Horizontal Scrollable Pages
-          Positioned(
-            // top: CustomDeviceUtils.getScreenHeight(context) / 10,
-            child: PageView(
-              children: [
-                const OnBoardingPage(
-                  image: CustomImages.onBoardingImage1,
-                  title: CustomText.onBoardingTitle1,
-                  subTitle: CustomText.onBoardingSubTitle1,
+          Column(
+            children: [
+              const SizedBox(height: CustomSizes.appBarHeight * 2),
+              Expanded(
+                child: BlocBuilder<OnboardingBloc, OnboardingState>(
+                  builder: (context, state) {
+                    return PageView.builder(
+                      controller: pageController,
+                      onPageChanged: (index) {
+                        // Dispatch an event to the BLoC when the page changes.
+                        context.read<OnboardingBloc>().add(
+                          UpdatePageIndex(index: index),
+                        );
+                      },
+                      itemCount: onBoardingScreen.length,
+                      itemBuilder: (context, index) {
+                        final onBoarding = onBoardingScreen[index];
+                        return OnBoardingPage(
+                          image: onBoarding.image,
+                          title: onBoarding.title,
+                          subTitle: onBoarding.title,
+                        );
+                      },
+                    );
+                  },
                 ),
-                const OnBoardingPage(
-                  image: CustomImages.onBoardingImage2,
-                  title: CustomText.onBoardingTitle2,
-                  subTitle: CustomText.onBoardingSubTitle2,
-                ),
-                const OnBoardingPage(
-                  image: CustomImages.onBoardingImage3,
-                  title: CustomText.onBoardingTitle3,
-                  subTitle: CustomText.onBoardingSubTitle3,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
 
           // -- Skip Button
